@@ -25,7 +25,7 @@ void	plus(char *a, char *b)
 
 	memset(result, '0', sizeof(result));
 	result[result_len] = 0;
-	while(result_len-- > 0)
+	while (result_len-- > 0)
 	{
 		if (a_len >= 0 && b_len >= 0)
 		{
@@ -59,7 +59,7 @@ void	plus(char *a, char *b)
 			printf("-");
 		}
 	}
-	while(result[result_len])
+	while (result[result_len])
 		printf("%c", result[result_len++]);
 }
 
