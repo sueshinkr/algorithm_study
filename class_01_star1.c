@@ -2,13 +2,11 @@
 
 int	main()
 {
-	int	line;
-	int	idx;
-	int	num_star;
+	int	line, num_star;
+	int	idx = 0;
 
 	scanf("%d", &line);
 	
-	idx = 0;
 	while (idx++ < line)
 	{
 		num_star = 0;
@@ -16,5 +14,6 @@ int	main()
 			printf("*");
 		printf("\n");
 	}
-}
 
+	return (0);
+}

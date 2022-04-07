@@ -3,14 +3,12 @@
 int	main()
 {
 	char	str[1000001];
-	int		idx;
-	int		flag;
-	int		count;
+	int		idx = 0;
+	int		flag = 0;
+	int		count = 0;
 
 	scanf("%[^\n]s", str);
-	idx = 0;
-	flag = 0;
-	count = 0;
+	
 	while (str[idx])
 	{
 		if (str[idx] == ' ')
@@ -22,6 +20,7 @@ int	main()
 		}
 		idx++;
 	}
+
 	printf("%d", count);
 	return (0);
 }

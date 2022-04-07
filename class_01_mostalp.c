@@ -4,13 +4,12 @@ int	main()
 {
 	char	str[1000001];
 	int		count[26];
-	int		idx;
-	int		mostalp;
-	int		flag;
-	int		result;
+	int		idx = 0;
+	int		mostalp_count = 0;
+	int		mostalp = 0;
 
 	fgets(str, 1000001, stdin);
-	idx = 0;
+
 	while (str[idx])
 	{
 		if (str[idx] >= 'a' && str[idx] <= 'z')
@@ -19,26 +18,21 @@ int	main()
 			count[str[idx] - 'A']++;
 		idx++;
 	}
+
 	idx = 0;
-	mostalp = -1;
-	flag = 0;
-	result = 0;
 	while (idx < 26)
 	{
-		if (mostalp < count[idx])
+		if (mostalp_count < count[idx])
 		{
-			mostalp = count[idx];
-			result = idx;
-			flag = 0;
+			mostalp_count = count[idx];
+			mostalp = idx + 'A';
 		}
-		else if (mostalp == count[idx])
-			flag = 1;
+		else if (mostalp_count == count[idx])
+			mostalp = '?';
 		idx++;
 	}
-	if (flag == 1)
-		printf("?");
-	else
-		printf("%c", result + 'A');
+	
+	printf("%c", mostalp);
 	return (0);
 }
 
