@@ -13,7 +13,6 @@ static void swap(char **str1, char **str2)
 
 static void quick_sort(char **word, int left, int right)
 {
-	char	*temp;
 	int		low = left + 1, high = right, pivot = left;
 
 	if (left < right)
