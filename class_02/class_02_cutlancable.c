@@ -33,7 +33,6 @@ int main()
 		}
 		else
 			max = len - 1;
-		
 	}
 	
 	free(each_lan);

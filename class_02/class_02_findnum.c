@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*
 static void swap(int *str1, int *str2)
 {
 	int	temp;
@@ -34,6 +35,35 @@ static void quick_sort(int *arr, int left, int right)
 		quick_sort(arr, low, right);
 	}
 }
+*/
+
+static int compare(const void *a, const void *b)
+{
+	if (*(int *)a < *(int *)b)
+		return (-1);
+	else if (*(int *)a > *(int *)b)
+		return (1);
+	return (0);
+}
+
+static int binary_search(int *set_num_array, int set_num, int find_num)
+{
+	int	min = 0, max = set_num;
+	int ans;
+
+	while (min <= max)
+	{
+		ans = (min + max) / 2;
+		if (find_num == set_num_array[ans])
+			return (1);
+		else if (find_num < set_num_array[ans])
+			max = ans - 1;
+		else
+			min = ans + 1;
+	}
+
+	return (0);
+}
 
 int main()
 {
@@ -43,26 +73,27 @@ int main()
 
 	scanf("%d", &set_num);
 	set_num_array = (int *)malloc((set_num + 1)* sizeof(int));
-	
 	idx = 0;
 	while (idx < set_num)
 		scanf("%d", &set_num_array[idx++]);
-	set_num_array[idx] = 0;
+	set_num_array[idx] = '\0';
 
 	scanf("%d", &find_num);
-	find_num_array = (int *)malloc(find_num * sizeof(int));
-
+	find_num_array = (int *)malloc((find_num + 1) * sizeof(int));
 	idx = 0;
 	while (idx < find_num)
 		scanf("%d", &find_num_array[idx++]);
+	find_num_array[idx] = '\0';
 
-	quick_sort(set_num_array, 0, set_num - 1);
+	//quick_sort(set_num_array, 0, set_num - 1);
+	qsort(set_num_array, set_num, sizeof(int), compare);
 
-	printf(":::::::::\n");
 	idx = 0;
-	while (idx < set_num)
-		printf("%d ", set_num_array[idx++]);
-
+	while (idx < find_num)
+		printf("%d\n", binary_search(set_num_array, set_num - 1, find_num_array[idx++]));
+	
+	free(set_num_array);
+	free(find_num_array);
 	return (0);
 }
 
