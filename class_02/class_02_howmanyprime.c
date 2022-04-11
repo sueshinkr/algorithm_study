@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 static int	is_prime(int num)
 {
@@ -19,23 +18,22 @@ static int	is_prime(int num)
 
 int main()
 {
-	int	m, n, idx, temp;
-	int	*arr;
+	int	num, idx, what_num, temp, count = 0;
+	int arr[1001];
 
-	scanf("%d %d", &m, &n);
-	arr = (int *)malloc((n + 1) * sizeof(int));
+	scanf("%d", &num);
 	
 	idx = -1;
-	while(++idx <= n)
+	while(++idx <= 1000)
 		arr[idx] = idx;
 
 	idx = 2;
-	while(idx * idx <= n)
+	while(idx * idx <= 1000)
 	{
 		if (is_prime(idx) == 1)
 		{
 			temp = 2;
-			while(idx * temp <= n)
+			while(idx * temp <= 1000)
 			{
 				arr[idx * temp] = 0;
 				temp++;
@@ -47,13 +45,14 @@ int main()
 			idx += 2;
 	}
 
-	while (m <= n)
+	idx = -1;
+	while (++idx < num)
 	{
-		if (arr[m] > 1)
-			printf("%d\n", arr[m]);
-		m++;
+		scanf("%d", &what_num);
+		if (arr[what_num] > 1)
+			count++;
 	}
 
-	free(arr);
+	printf("%d", count);
 	return (0);
 }
