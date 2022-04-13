@@ -12,10 +12,10 @@ static int compare(const void *a, const void *b)
 
 int main()
 {
-	int	num, target, *num_arr, idx = 0;
-	int	min, max, cut, temp, cmp = 0;
+	int			num, *num_arr, idx = 0, cut, min, max, result;
+	long long	sum, target;
 
-	scanf("%d %d", &num, &target);
+	scanf("%d %lld", &num, &target);
 	num_arr = (int *)malloc(num * sizeof(int));
 	
 	while (idx < num)
@@ -23,33 +23,29 @@ int main()
 
 	qsort(num_arr, num, sizeof(int), compare);
 
-	min = num_arr[0];
+	min = 0;
 	max = num_arr[num - 1];
-	cut = (min + max) / 2;
 
-	while (1)
+	while (min <= max)
 	{
-		temp = 0;
+		cut = (min + max) / 2;
+		sum = 0;
+		idx = 0;
 		while (idx < num)
-			temp += num_arr[idx++] - cut;
-		if (temp < target)
-		{
-			printf("cut : %d, temp : %d\n", cut, temp);
-			max = cut;
-			cut = (cut + min) / 2;
+		{ 	
+			if (num_arr[idx] - cut >= 0)
+				sum += num_arr[idx] - cut;
+			idx++;
 		}
-		else if (temp >= target)
-		{
-			printf("cut : %d, temp : %d\n", cut, temp);
-			if (temp > cmp)
-				cmp = temp;
-			else
-				break;
-			min = cut;
-			cut = (cut + max) / 2;
+		if (sum < target)
+			max = cut - 1;
+		else if (sum >= target)
+		{	
+			result = cut;
+			min = cut + 1;
 		}
 	}
-	printf("%d", cut);
+	printf("%d", result);
 	free(num_arr);
 	return (0);
 }
