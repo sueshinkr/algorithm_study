@@ -1,5 +1,7 @@
 {
 	"files.associations": {
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"class_02_sortnum2": "c",
+		"stdlib.h": "c"
 	}
 }
