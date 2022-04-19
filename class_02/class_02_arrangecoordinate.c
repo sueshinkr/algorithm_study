@@ -7,20 +7,60 @@ typedef struct coordinate
 	int	y;
 } cor;
 
-static void swap_cor(int *one, int *two)
+static int compare(const void *one, const void *two)
 {
-	int temp_0, temp_1;
-
-	temp_0 = one[0];
-	one[0] = two[0];
-	two[0] = temp_0;
-
-	temp_1 = one[1];
-	one[1] = two[1];
-	two[1] = temp_1; 
+	cor	a = *(cor *)one;
+	cor	b = *(cor *)two;
+	
+	if (a.x < b.x)
+		return (-1);
+	else if (a.x > b.x)
+		return (1);
+	else
+	{
+		if (a.y > b.y)
+			return (1);
+		else
+			return (-1);
+	}
+	return (0);
 }
 
-static void	quick_sort(int **cor, int left, int right)
+int main()
+{
+	int	num, idx;
+	cor *xy;
+
+	scanf("%d", &num);
+	xy = (cor *)malloc(num * sizeof(cor));
+	
+	idx = -1;
+	while (++idx < num)
+		scanf("%d %d", &xy[idx].x, &xy[idx].y);
+
+	qsort(xy, num, sizeof(cor), compare);
+	//quick_sort(xy, 0, num - 1);
+
+	idx = -1;
+	while (++idx < num)
+		printf("%d %d\n", xy[idx].x, xy[idx].y);
+	
+	free(xy);
+	return (0);
+}
+
+
+/*
+static void swap_cor(cor **xy, int a, int b)
+{
+	cor *temp;
+
+	temp = xy[a];
+	xy[a] = xy[b];
+	xy[b] = temp;
+}
+
+static void	quick_sort(cor **xy, int left, int right)
 {
 	int	low = left + 1, high = right, pivot = left;
 	
@@ -28,18 +68,18 @@ static void	quick_sort(int **cor, int left, int right)
 	{
 		while (low <= high)
 		{	
-			while (cor[low][0] <= cor[pivot][0] && low < right)
+			while (xy[low]->x <= xy[pivot]->x && low < right)
 			{
-				if (cor[low][0] == cor[pivot][0] 
-					&& cor[low][1] > cor[pivot][1])
+				if (xy[low]->x == xy[pivot]->x 
+					&& xy[low]->y > xy[pivot]->y)
 					break;
 				else
 					low++;
 			}
-			while (cor[high][0] >= cor[pivot][0] && high > left)
+			while (xy[high]->x >= xy[pivot]->x && high > left)
 			{
-				if (cor[high][0] == cor[pivot][0] 
-					&& cor[high][1] < cor[pivot][1])
+				if (xy[high]->x == xy[pivot]->x 
+					&& xy[high]->y < xy[pivot]->y)
 					break;
 				else
 					high--;
@@ -47,58 +87,13 @@ static void	quick_sort(int **cor, int left, int right)
 			if (low >= high)
 				break;
 
-			swap_cor(cor[low], cor[high]);
+			swap_cor(xy, low, high);
 			low++;
 			high--;
 		}
-		swap_cor(cor[left], cor[high]);
-		quick_sort(cor, left, high - 1);
-		quick_sort(cor, low, right);
+		swap_cor(xy, left, high);
+		quick_sort(xy, left, high - 1);
+		quick_sort(xy, low, right);
 	}
 }
-
-static int compare(const void *a, const void *b)
-{
-	if (*(int *)a[0] < *(int *)b[0])
-		return (-1);
-	else if (*(int *)a[0] > *(int *)b[0])
-		return (1);
-	else
-	{
-		if (*(int *)a[1] < *(int *)b[1])
-			return (-1);
-		else if (*(int *)a[1] > *(int *)b[1])
-			return (10);
-	}
-	return (0);
-}
-
-
-int main()
-{
-	int	num, idx;
-	cor *arr_cor;
-
-	scanf("%d", &num);
-	cor = (int **)malloc(num * sizeof(int *));
-	
-	idx = -1;
-	while (++idx < num)
-	{
-		coordinate[idx] = (int *)malloc(2 * sizeof(int));
-		scanf("%d %d", &coordinate[idx][0], &coordinate[idx][1]);
-	}
-
-	qsort(coordinate, num, sizeof(int *), compare);
-	//quick_sort(coordinate, 0, num - 1);
-
-	idx = 0;
-	while (idx < num)
-	{
-		printf("%d %d\n", coordinate[idx][0], coordinate[idx][1]);
-		free(coordinate[idx++]);
-	}
-	free(coordinate);
-
-	return (0);
-}
+*/
