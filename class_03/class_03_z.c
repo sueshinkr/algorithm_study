@@ -2,39 +2,39 @@
 #include <stdlib.h>
 #include <math.h>
 
-static void z_recur(int **arr, int size, int row_idx, int column_idx, int *idx)
+static void z_recur(int size, int row, int column, int row_idx, int column_idx, int *ans)
 {
-	if (size > 2)
+	if (size < 2)
+		return ;
+	if (row < row_idx - size / 2 && column < column_idx - size / 2)
+		z_recur(size / 2, row, column, row_idx - size / 2, column_idx - size / 2, ans);
+	else if (row < row_idx - size / 2 && column >= column_idx - size / 2)
 	{
-		z_recur(arr, size / 2, 0, 0, idx);
-		z_recur(arr, size / 2, size / 2, 0, idx);
-		z_recur(arr, size / 2, 0, size / 2, idx);
-		z_recur(arr, size / 2, size / 2, size / 2, idx);
+		*ans += pow(size / 2, 2);
+		z_recur(size / 2, row, column, row_idx - size / 2, column_idx, ans);
 	}
-	else
+	else if (row >= row_idx - size / 2 && column < column_idx - size / 2)
 	{
-		arr[row_idx][column_idx] = *idx++;
-		arr[row_idx][column_idx + 1] = *idx++;
-		arr[row_idx + 1][column_idx] = *idx++;
-		arr[row_idx + 1][column_idx + 1] = *idx++;
+		*ans += pow(size / 2, 2) * 2;
+		z_recur(size / 2, row, column, row_idx, column_idx - size / 2, ans);
 	}
-
-
+	else if (row >= row_idx - size / 2 && column >= column_idx - size / 2)
+	{
+		*ans += pow(size / 2, 2) * 3;
+		z_recur(size / 2, row, column, row_idx, column_idx, ans);
+	}
 }
 
 int main()
 {
-	int	num, size, row, column, **arr, idx = -1;
+	int	num, size, row, column, ans = 0;
 
 	scanf("%d %d %d", &num, &row, &column);
 	size = pow(2, num);
-	arr = (int **)malloc(size * sizeof(int *));
-	while (++idx < column)
-		arr[idx] = (int *)calloc(size, sizeof(int));
 
-	idx = 0;
-	z_recur(arr, size, 0, 0, &idx);
+	z_recur(size, row, column, size, size, &ans);
 
-	printf("%d", arr[row - 1][column - 1]);
+	printf("%d", ans);
 	return (0);
 }
+
