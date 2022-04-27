@@ -47,7 +47,7 @@ static void recur_count(int num, int column_idx, int row_idx)
 		else if (count0_temp == 9)
 			count0 -= 8;
 		else if (count1_temp == 9)
-			count0 -= 8;
+			count1 -= 8;
 		else
 			arr[column_idx -1][row_idx - 1] = 2;
 
@@ -63,11 +63,12 @@ static void recur_count(int num, int column_idx, int row_idx)
 			while (++column < 3)
 			{
 				temp = arr[column_idx - column * num / 3 - 1][row_idx - row * num / 3 - 1];
+				printf("arr[%d][%d] : %d\n", column_idx - column * num / 3, row_idx - row * num / 3, temp);
 				if (temp == -1)
 					countm1_temp++;
 				else if (temp == 0)
 					count0_temp++;
-				else
+				else if (temp == 1)
 					count1_temp++;
 			}
 		}
@@ -85,6 +86,8 @@ static void recur_count(int num, int column_idx, int row_idx)
 			count1 += count1_temp;
 			arr[column_idx - 1][row_idx - 1] = 2;
 		}
+		printf("%d\n%d\n%d\n", countm1, count0, count1);
+
 	}
 }
 int main()
