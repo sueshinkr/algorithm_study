@@ -28,8 +28,6 @@ static void find_by_bfs(bool **maze, int **check, int column, int row)
 		cur_column = q.data[q.front].rear;
 		cur_count = q.data[q.front++].count;
 
-		printf("column : %d, row : %d\n", column, row);
-		printf("cur_column : %d, cur_row : %d, count : %d\n", cur_column, cur_row, cur_count);
 		if (cur_row == row - 1 && cur_column == column - 1)
 		{
 			printf("%d", cur_count);
@@ -37,7 +35,6 @@ static void find_by_bfs(bool **maze, int **check, int column, int row)
 		}
 		if (cur_row != row - 1 && maze[cur_column][cur_row + 1] == 1)
 		{
-			printf("cur_row + 1\n");
 			if (check[cur_column][cur_row + 1] == 0)
 			{
 				check[cur_column][cur_row + 1] = cur_count + 1;
@@ -48,7 +45,6 @@ static void find_by_bfs(bool **maze, int **check, int column, int row)
 		}
 		if (cur_column != column - 1 && maze[cur_column + 1][cur_row] == 1)
 		{
-			printf("cur_column + 1\n");
 			if (check[cur_column + 1][cur_row] == 0)
 			{
 				check[cur_column + 1][cur_row] = cur_count + 1;
@@ -59,7 +55,6 @@ static void find_by_bfs(bool **maze, int **check, int column, int row)
 		}
 		if (cur_row != 0 && maze[cur_column][cur_row - 1] == 1)
 		{
-			printf("cur_row - 1\n");
 			if (check[cur_column][cur_row - 1] == 0)
 			{
 				check[cur_column][cur_row - 1] = cur_count + 1;
@@ -70,7 +65,6 @@ static void find_by_bfs(bool **maze, int **check, int column, int row)
 		}
 		if (cur_column != 0 && maze[cur_column - 1][cur_row] == 1)
 		{
-			printf("cur_column - 1\n");
 			if (check[cur_column - 1][cur_row] == 0)
 			{
 				check[cur_column - 1][cur_row] = cur_count + 1;
@@ -80,6 +74,7 @@ static void find_by_bfs(bool **maze, int **check, int column, int row)
 			}
 		}
 	}
+	free(q.data);
 }
 
 int main()
@@ -90,8 +85,8 @@ int main()
 	bool	 **maze;
 
 	scanf("%d %d", &column, &row);
-	maze = (bool **)malloc(row * sizeof(bool *));
-	check = (int **)malloc(row * sizeof(int *));
+	maze = (bool **)malloc(column * sizeof(bool *));
+	check = (int **)malloc(column * sizeof(int *));
 
 	idx = -1;
 	while (++idx < column)
@@ -105,6 +100,14 @@ int main()
 	}
 
 	find_by_bfs(maze, check, column, row);
+	idx = -1;
+	while (++idx < column)
+	{
+		free(maze[idx]);
+		free(check[idx]);
+	}
+	free(maze);
+	free(check);
 
 	return (0);
 }
