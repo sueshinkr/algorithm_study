@@ -2,15 +2,12 @@
 
 int	main()
 {
-	int	num[9];
-	int	idx;
-	int	max[2];
+	int	num[9], max[2] = {0, }, idx;
 
 	idx = 0;
 	while (idx < 9)
 		scanf("%d", &num[idx++]);
-	max[0] = 0;
-	max[1] = 0;
+
 	while (--idx >= 0)
 	{
 		if (max[0] < num[idx])

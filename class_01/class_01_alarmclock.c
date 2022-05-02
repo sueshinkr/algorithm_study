@@ -2,8 +2,7 @@
 
 int main()
 {
-	int	hour;
-	int	minute;
+	int	hour, minute;
 
 	scanf("%d %d", &hour, &minute);
 	minute -= 45;
