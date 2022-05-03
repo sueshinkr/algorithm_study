@@ -52,8 +52,7 @@ static void quick_sort(char **word, int left, int right)
 int main()
 {
 	int		num, idx = 0;
-	char	**word;
-	char	temp[50];
+	char	**word, temp[50];
 
 	scanf("%d", &num);
 	word = (char **)malloc((num + 1) * sizeof(char *));
@@ -68,8 +67,8 @@ int main()
 
 	quick_sort(word, 0, num - 1);
 
-	idx = 0;
-	while (word[idx])
+	idx = -1;
+	while (word[++idx])
 	{
 		if (idx == 0)
 			printf("%s\n", word[idx]);
@@ -78,7 +77,6 @@ int main()
 			if (strcmp(word[idx], word[idx - 1]))
 				printf("%s\n", word[idx]);
 		}
-		idx++;
 	}
 
 	return (0);

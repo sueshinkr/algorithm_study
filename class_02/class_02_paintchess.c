@@ -13,25 +13,24 @@ static int min_num(int a, int b, int c)
 
 int main()
 {
-	int	m, n, idx = 0;
-	int column = 0, row = 0, count_one, count_all;
+	int	n, m, idx, column = 0, row = 0, count_one, count_all;
 	int check_B = 0, check_W = 0, min = 32;
-	char **board;
-	char BorW = 'B';
+	char **board, BorW = 'B';
 
-	scanf("%d %d", &m, &n);
-	board = (char **)malloc(m * sizeof(char *));
+	scanf("%d %d", &n, &m);
+	board = (char **)malloc(n * sizeof(char *));
 	
-	while (idx < m)
+	idx = -1;
+	while (++idx < n)
 	{
-		board[idx] = (char *)malloc(n * sizeof(char));
-		scanf("%s", board[idx++]);
+		board[idx] = (char *)malloc(m * sizeof(char));
+		scanf("%s", board[idx]);
 	}
 
-	while (m - column >= 8)
+	while (n - row >= 8)
 	{
-		row = 0;
-		while (n - row >= 8)
+		column = 0;
+		while (m - column >= 8)
 		{	
 			check_B = 0;
 			check_W = 0;
@@ -41,7 +40,7 @@ int main()
 				count_one = -1;
 				while (++count_one < 8)
 				{
-					if (board[column + count_all][row + count_one] != BorW)
+					if (board[row + count_all][column + count_one] != BorW)
 						check_B++;
 					else
 						check_W++;
@@ -52,12 +51,13 @@ int main()
 				}
 			}
 			min = min_num(min, check_B, check_W);
-			row++;
+			column++;
 		}
-		column++;
+		row++;
 	}
 
-	while (--idx >= 0)
+	idx = -1;
+	while (++idx < n)
 		free(board[idx]);
 	free(board);
 
