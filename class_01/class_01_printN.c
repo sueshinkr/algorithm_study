@@ -2,12 +2,11 @@
 
 int	main()
 {
-	int	n;
-	int	idx;
+	int	n, idx;
 
 	scanf("%d", &n);
 	idx = 0;
-	while (idx < n)
-		printf("%d\n", ++idx);
+	while (idx++ < n)
+		printf("%d\n", idx);
 	return (0);
 }

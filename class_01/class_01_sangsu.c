@@ -2,8 +2,7 @@
 
 int main()
 {
-	int	a, b;
-	int	new_a, new_b;
+	int	a, b, new_a, new_b;
 
 	scanf("%d %d", &a, &b);
 	new_a = a % 10 * 100 + (a / 10) % 10 * 10 + a / 100;
