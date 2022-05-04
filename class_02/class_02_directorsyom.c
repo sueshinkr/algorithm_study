@@ -2,15 +2,13 @@
 
 int main()
 {
-	int	num, temp;
-	int	end = 0, end_count = 0, count = 0;
+	int	num, temp, end = 0, end_count = 0;
 
 	scanf("%d", &num);
 
 	while(1)
 	{
 		temp = end;
-		count = 0;
 		while (temp > 0)
 		{	
 			if (temp % 1000 == 666)

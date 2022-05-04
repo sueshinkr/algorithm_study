@@ -2,6 +2,7 @@
 	"files.associations": {
 		"stdio.h": "c",
 		"class_02_sortnum2": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"cstdio": "c"
 	}
 }
