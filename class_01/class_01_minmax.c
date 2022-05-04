@@ -2,8 +2,7 @@
 
 int main()
 {
-	int	num, integer;
-	int	max = -1000001, min = 1000001;
+	int	num, integer, max = -1000001, min = 1000001;
 
 	scanf("%d", &num);
 

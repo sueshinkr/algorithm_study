@@ -1,18 +1,13 @@
 #include <stdio.h>
-#include <string.h>
 
 int main()
 {
-	int	num[10];
-	int	remainder[42];
-	int	count = 0;
-	int	idx = 0;
+	int	num[10], remainder[42] = {0, }, idx = 0, count = 0;
 
 	while (idx < 10)
 		scanf("%d", &num[idx++]);
 	
 	idx = 0;
-	memset(remainder, 0, sizeof(remainder));
 	while (idx < 10)
 		remainder[num[idx++] % 42]++;
 	

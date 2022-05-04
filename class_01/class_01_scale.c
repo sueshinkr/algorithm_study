@@ -2,9 +2,7 @@
 
 int main()
 {
-	int	scale[8];
-	int	idx = 0;
-	int	count = 0;
+	int	scale[8], idx = 0, count = 0;
 
 	while (idx < 8)
 		scanf("%d", &scale[idx++]);

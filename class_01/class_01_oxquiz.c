@@ -2,11 +2,7 @@
 
 int main()
 {
-	int		num;
-	char	ox[80];
-	int		idx;
-	int		score;
-	int		count;
+	int	num, ox[80], idx, score, count;
 
 	scanf("%d", &num);
 	

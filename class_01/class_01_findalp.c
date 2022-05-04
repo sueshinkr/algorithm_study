@@ -4,19 +4,17 @@
 int main()
 {
 	char	str[100];
-	char	alpset[26];
-	int		idx;
+	int	alpset[26] = {0, }, idx;
 
 	scanf("%s", str);
-	memset(alpset, -1, sizeof(alpset));
 	
 	idx = strlen(str);
 	while(idx-- > 0)
-		alpset[str[idx] - 'a'] = idx;
+		alpset[str[idx] - 'a'] = idx + 1;
 	
 	while(++idx < 26)
 	{
-		printf("%d", alpset[idx]);
+		printf("%d", alpset[idx] - 1);
 		if (idx == 25)
 			break;
 		printf(" ");
