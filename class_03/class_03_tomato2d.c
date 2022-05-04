@@ -114,7 +114,6 @@ int	main()
 
 /*
 #include <stdio.h>
-#pragma warning(disable: 4996)
 
 int buf[1000000];
 char ck[1000][1000];

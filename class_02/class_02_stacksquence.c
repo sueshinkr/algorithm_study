@@ -3,19 +3,16 @@
 
 int main()
 {
-	int	num, idx = 0, stack_idx = -1, push_count = 0, push_pop_idx = 0;
+	int	num, idx, stack_idx = -1, push_count = 0, push_pop_idx = 0;
 	int	*arr, *stack, push_pop[200000];
 
 	scanf("%d", &num);
 	arr = (int *)malloc(num * sizeof(int));
-	stack = (int *)malloc(num * sizeof(int));
+	stack = (int *)calloc(num, sizeof(int));
 
-	
-	while (idx < num)
-	{
-		stack[idx] = 0;
-		scanf("%d", &arr[idx++]);
-	}
+	idx = -1;
+	while (++idx < num)
+		scanf("%d", &arr[idx]);
 
 	idx = 0;
 	while (idx < num)
@@ -38,14 +35,13 @@ int main()
 		}
 	}
 	
-	idx = 0;
-	while(idx < push_pop_idx)
+	idx = -1;
+	while(++idx < push_pop_idx)
 	{
 		if (push_pop[idx] == 1)
 			printf("+\n");
 		else
 			printf("-\n");
-		idx++;
 	}
 
 	free(arr);

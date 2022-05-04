@@ -3,16 +3,15 @@
 
 int main()
 {
-	int				keep_lan, need_lan, count, idx = 0;
-	unsigned int	*each_lan, result;
-	long long sum = 0, len, max, min = 1;
+	int			keep_lan, need_lan, count, idx = 0, *each_lan, result;
+	long long	sum = 0, len, max, min = 1;
 
 	scanf("%d %d", &keep_lan, &need_lan);
-	each_lan = (unsigned int *)malloc(keep_lan * sizeof(unsigned int));
+	each_lan = (int *)malloc(keep_lan * sizeof(int));
 
 	while (idx < keep_lan)
 	{
-		scanf("%u", &each_lan[idx]);
+		scanf("%d", &each_lan[idx]);
 		sum += each_lan[idx];
 		idx++;
 	}
@@ -21,10 +20,10 @@ int main()
 	while (min <= max)
 	{	
 		len = (max + min) / 2;
-		idx = 0;
 		count = 0;
-		while (idx < keep_lan)
-			count += each_lan[idx++] / len;
+		idx = -1;
+		while (++idx < keep_lan)
+			count += each_lan[idx] / len;
 
 		if (count >= need_lan)
 		{
@@ -36,7 +35,7 @@ int main()
 	}
 	
 	free(each_lan);
-	printf("%u", result);
+	printf("%d", result);
 	return (0);
 }
 
