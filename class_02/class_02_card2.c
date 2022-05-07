@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+/*
 int main()
 {
-	int	num, count = 0, idx = 0, flag = 2;
-	int	*num_arr;
+	int	num, *num_arr, count = 0, idx = 0, flag = 2;
 
 	scanf("%d", &num);
 	num_arr = (int *)malloc(num * sizeof(int));
@@ -38,6 +37,31 @@ int main()
 	free(num_arr);
 	return (0);
 }
+*/
+
+int main()
+{
+	int	num, *num_arr, temp, idx, front, rear;
+
+	scanf("%d", &num);
+	num_arr = (int *)malloc(num * sizeof(int));
+
+	idx = -1;
+	while (++idx < num)
+		num_arr[idx] = idx + 1;
+
+	idx = -1, front = -1, rear = num - 1;
+	while (++idx < num - 1)
+	{
+		num_arr[++front % num] = 0;
+		temp = num_arr[++front % num]; 
+		num_arr[front % num] = 0;
+		num_arr[++rear % num] = temp;
+	}
+	printf("%d", num_arr[++front % num]);
+	free(num_arr);
+	return (0);
+}
 
 /*
 규칙으로도 가능
@@ -63,3 +87,4 @@ int main()
 
 	return (0);
 }
+*/

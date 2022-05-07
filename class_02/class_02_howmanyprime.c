@@ -18,8 +18,7 @@ static int	is_prime(int num)
 
 int main()
 {
-	int	num, idx, what_num, temp, count = 0;
-	int arr[1001];
+	int	num, idx, what_num, temp, arr[1001], count = 0;
 
 	scanf("%d", &num);
 	
@@ -34,7 +33,7 @@ int main()
 		{
 			temp = 2;
 			while(idx * temp <= 1000)
-			{
+			{	
 				arr[idx * temp] = 0;
 				temp++;
 			}
@@ -45,8 +44,7 @@ int main()
 			idx += 2;
 	}
 
-	idx = -1;
-	while (++idx < num)
+	while (num-- > 0)
 	{
 		scanf("%d", &what_num);
 		if (arr[what_num] > 1)

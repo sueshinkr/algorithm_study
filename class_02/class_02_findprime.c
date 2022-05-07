@@ -19,8 +19,7 @@ static int	is_prime(int num)
 
 int main()
 {
-	int	m, n, idx, temp;
-	int	*arr;
+	int	m, n, *arr, idx, temp;
 
 	scanf("%d %d", &m, &n);
 	arr = (int *)malloc((n + 1) * sizeof(int));

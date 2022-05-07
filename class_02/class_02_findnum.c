@@ -72,26 +72,22 @@ int main()
 	int	left, right, pivot, idx;
 
 	scanf("%d", &set_num);
-	set_num_array = (int *)malloc((set_num + 1)* sizeof(int));
-	idx = 0;
-	while (idx < set_num)
-		scanf("%d", &set_num_array[idx++]);
-	set_num_array[idx] = '\0';
+	set_num_array = (int *)malloc(set_num * sizeof(int));
+	idx = -1;
+	while (++idx < set_num)
+		scanf("%d", &set_num_array[idx]);
 
 	scanf("%d", &find_num);
-	find_num_array = (int *)malloc((find_num + 1) * sizeof(int));
-	idx = 0;
-	while (idx < find_num)
-		scanf("%d", &find_num_array[idx++]);
-	find_num_array[idx] = '\0';
+	find_num_array = (int *)malloc(find_num * sizeof(int));
+	idx = -1;
+	while (++idx < find_num)
+		scanf("%d", &find_num_array[idx]);
 
-	//quick_sort(set_num_array, 0, set_num - 1);
 	qsort(set_num_array, set_num, sizeof(int), compare);
 
-	idx = 0;
-	while (idx < find_num)
-		printf("%d\n", binary_search(set_num_array, set_num - 1, find_num_array[idx++]));
-	
+	idx = -1;
+	while (++idx < find_num)
+		printf("%d\n", binary_search(set_num_array, set_num - 1, find_num_array[idx]));
 	free(set_num_array);
 	free(find_num_array);
 	return (0);
