@@ -105,3 +105,107 @@ int main()
 
 	return (0);
 }
+
+
+/*
+#include <stdio.h>
+#include <string.h>
+#define P 10000
+#define Qsize 10001
+
+typedef struct
+{
+    char order;
+    int from, num;
+} Q;
+
+int T, A, B, wt, rd;
+int visited[10001];
+Q Queue[Qsize];
+
+int BFS(void)
+{
+    Q cur, next;
+    wt = rd = 0;
+
+    cur.num = A;
+    cur.from = -1;
+    visited[A] = 1;
+    Queue[wt++] = cur;
+
+    while (wt != rd)
+    {
+        cur = Queue[rd++];
+        next.from = rd - 1;
+
+        int d, s, l, r;
+        d = (cur.num << 1) % P;
+        if (cur.num == 0)
+            s = 9999;
+        else
+            s = cur.num - 1;
+        l = cur.num / 1000 + (cur.num % 1000) * 10;
+        r = cur.num / 10 + (cur.num % 10) * 1000;
+
+        if (visited[d] == 0)
+        {
+            visited[d] = 1;
+            next.num = d;
+            next.order = 'D';
+            Queue[wt++] = next;
+            if (next.num == B)
+                return wt - 1;
+        }
+        if (visited[s] == 0)
+        {
+            visited[s] = 1;
+            next.num = s;
+            next.order = 'S';
+            Queue[wt++] = next;
+            if (next.num == B)
+                return wt - 1;
+        }
+        if (visited[l] == 0)
+        {
+            visited[l] = 1;
+            next.num = l;
+            next.order = 'L';
+            Queue[wt++] = next;
+            if (next.num == B)
+                return wt - 1;
+        }
+        if (visited[r] == 0)
+        {
+            visited[r] = 1;
+            next.num = r;
+            next.order = 'R';
+            Queue[wt++] = next;
+            if (next.num == B)
+                return wt - 1;
+        }
+    }
+
+    return -1;
+}
+
+void PRT(int n)
+{
+    if (n <= 0)
+        return;
+    PRT(Queue[n].from);
+    printf("%c", Queue[n].order);
+}
+
+int main(void)
+{
+    scanf("%d", &T);
+    while (T--)
+    {
+        scanf("%d %d", &A, &B);
+        PRT(BFS());
+        printf("\n");
+        memset(visited, 0, sizeof(visited));
+    }
+    return 0;
+}
+*/
