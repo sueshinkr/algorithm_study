@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static int	padovan(int num, int *arr)
+static long long	padovan(long long num, long long *arr)
 {
 	if (num < 10)
 	{
@@ -18,17 +18,20 @@ static int	padovan(int num, int *arr)
 
 int	main()
 {
-	int	test_num, num, *arr;
+	int	test_num;
+	long long	num, *arr;
 	
 	scanf("%d", &test_num);
 
 	while (test_num-- > 0)
 	{
-		scanf("%d", &num);
-		arr = (int *)calloc(num + 1, sizeof(int));
+		scanf("%lld", &num);
+		arr = (long long *)calloc(num + 1, sizeof(long long));
 
-		printf("%d\n",padovan(num, arr));
+		printf("%lld\n",padovan(num, arr));
 		free(arr);
 	}
 	return (0);
 }
+
+// num-3 + num-2;
