@@ -12,27 +12,27 @@ static int compare(const void *a, const void *b)
 
 int main()
 {
-	int	num, target, *num_arr, idx = 0;
-	int	card1, card2, card3, temp, result = 0;
+	int	num, target, *num_arr, idx, card1, card2, card3, temp, result = 0;
 
 	scanf("%d %d", &num, &target);
 	num_arr = (int *)malloc(num * sizeof(int));
 
-	while (idx < num)
-		scanf("%d", &num_arr[idx++]);
+	idx = -1;
+	while (++idx < num)
+		scanf("%d", &num_arr[idx]);
 	
 	qsort(num_arr, num, sizeof(int), compare);
 
 	card1 = -1;
-	while (card1++ < num)
+	while (++card1 < num)
 	{
 		card2 = card1;
-		while (card2++ < num)
+		while (++card2 < num)
 		{
 			if (num_arr[card1] + num_arr[card2] > target)
 				break;
 			card3 = card2;
-			while (card3++ < num)
+			while (++card3 < num)
 			{
 				temp = num_arr[card1] + num_arr[card2] + num_arr[card3];
 				if (temp > target)
