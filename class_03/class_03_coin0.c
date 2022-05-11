@@ -15,10 +15,10 @@ int	main()
 	idx = num - 1;
 	while (1)
 	{
-		while (sum >= arr[idx])
+		if (sum >= arr[idx])
 		{
-			sum -= arr[idx];
-			count++;
+			count += sum / arr[idx];
+			sum -= sum / arr[idx] * arr[idx];
 		}
 		if (sum == 0)
 			break;
