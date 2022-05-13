@@ -38,3 +38,5 @@ int	main()
 	printf("%lld\n", ans);
 	return (0);
 }
+
+// 나중에 비트연산으로도 도전해보기
