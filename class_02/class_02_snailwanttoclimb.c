@@ -14,6 +14,13 @@ int main()
 }
 
 /*
+// 시간 초과
+int	main()
+{
+	int	up, down, height, total = 0, count = 1;
+
+	scanf("%d %d %d", &up, &down, &height);
+
 	while (height - total > up)
 	{
 		total += (up - down);
@@ -21,4 +28,6 @@ int main()
 	}
 
 	printf("%d", count);
+	return (0);
+}
 */
