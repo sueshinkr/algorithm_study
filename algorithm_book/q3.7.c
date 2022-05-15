@@ -18,16 +18,11 @@ static void make_sum(char *str, int len, int start, long long sum)
 		while (j-- > 0)
 			temp = temp * 10 + str[idx++] - '0';
 		if (i + start == len)
-		{
-			printf("sum + temp : %lld\n", sum + temp);
 			ans += (sum + temp);
-			break ;
-		}
 		else
 			make_sum(str, len, idx, sum + temp);
 	}
 }
-
 
 int	main()
 {
