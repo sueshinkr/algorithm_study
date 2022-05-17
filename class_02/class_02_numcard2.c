@@ -17,15 +17,15 @@ int main()
 
 	scanf("%d", &num);
 	num_arr = (int *)malloc(num * sizeof(int));
-	idx = 0;
-	while (idx < num)
-		scanf("%d", &num_arr[idx++]);
+	idx = -1;
+	while (++idx < num)
+		scanf("%d", &num_arr[idx]);
 
 	scanf("%d", &find_num);
 	find_num_arr = (int *)malloc(find_num * sizeof(int));
-	idx = 0;
-	while (idx < find_num)
-		scanf("%d", &find_num_arr[idx++]);
+	idx = -1;
+	while (++idx < find_num)
+		scanf("%d", &find_num_arr[idx]);
 
 	qsort(num_arr, num, sizeof(int), compare);
 
@@ -75,5 +75,3 @@ int main()
 	free(find_num_arr);
 	return (0);
 }
-
-
