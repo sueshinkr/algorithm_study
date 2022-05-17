@@ -2,12 +2,11 @@
 
 int main()
 {
-	int	k, idx, temp, stack_idx, num_arr[100000];
+	int	k, idx, temp, stack_idx = 0, num_arr[100000];
 
 	scanf("%d", &k);
 
 	idx = -1;
-	stack_idx = 0;
 	while (++idx < k)
 	{
 		scanf("%d", &temp);

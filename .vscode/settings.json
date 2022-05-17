@@ -3,6 +3,7 @@
 		"stdio.h": "c",
 		"class_02_sortnum2": "c",
 		"stdlib.h": "c",
-		"cstdio": "c"
+		"cstdio": "c",
+		"stdbool.h": "c"
 	}
 }

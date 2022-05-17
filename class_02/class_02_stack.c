@@ -4,16 +4,15 @@
 
 int main()
 {
-	int		num, *stack, idx, stack_idx, push_temp;
+	int		num, *stack, stack_idx, push_temp;
 	char	order[10];
 	
 	scanf("%d", &num);
 	stack = (int *)malloc(num * sizeof(int));
 
-	idx = 0;
 	stack_idx = 0;
 	stack[0] = -1;
-	while (idx < num)
+	while (num-- > 0)
 	{
 		scanf("%s", order);
 
@@ -48,8 +47,6 @@ int main()
 			else
 				printf("%d\n", stack[stack_idx - 1]);
 		}
-		
-		idx++;
 	}
 
 	return (0);

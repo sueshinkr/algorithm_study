@@ -2,33 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct	human_info
+typedef struct	human
 {
 	int		age;
 	int		order;
 	char	name[101];
-};
+} human_info;
 
 /*
-static void	int_swap(int *num1, int *num2)
-{
-	int	temp;
-
-	temp = *num1;
-	*num1 = *num2;
-	*num2 = temp;
-}
-
-static void	char_swap(char **str1, char **str2)
-{
-	char	temp[100];
-	strcpy(temp, *str1);
-	strcpy(*str1, *str2);
-	strcpy(*str2, temp);
-}
-*/
-
-static void swap_struct(struct human_info *one, struct human_info *two)
+static void swap_struct(human_info *one, human_info *two)
 {
 	int		temp, order_temp;
 	char	str[101];
@@ -46,7 +28,7 @@ static void swap_struct(struct human_info *one, struct human_info *two)
 	two->order = order_temp;
 }
 
-static void	quick_sort(struct human_info *human, int left, int right)
+static void	quick_sort(human_info *human, int left, int right)
 {
 	int	low = left + 1, high = right, pivot = left;
 	
@@ -82,16 +64,35 @@ static void	quick_sort(struct human_info *human, int left, int right)
 		quick_sort(human, low, right);
 	}
 }
+*/
 
+static int compare(const void *a, const void *b)
+{
+	human_info *one = (human_info *)a;
+	human_info *two = (human_info *)b;
+
+	if (one->age > two->age)
+		return (1);
+	else if (one->age < two->age)
+		return (-1);
+	else
+	{
+		if (one->order > two->order)
+			return (1);
+		else if (one->order < two->order)
+			return (-1);
+	}
+	return (0);
+}
 
 int main()
 {
 	int		num, idx;
-	struct human_info	*human;
+	human_info	*human;
 
 	
 	scanf("%d", &num);
-	human = (struct human_info *)malloc(num * sizeof(struct human_info));
+	human = (human_info *)malloc(num * sizeof(human_info));
 
 	idx = -1;
 	while (++idx < num)
@@ -100,7 +101,8 @@ int main()
 		human[idx].order = idx;
 	}
 
-	quick_sort(human, 0, num - 1);
+	//quick_sort(human, 0, num - 1);
+	qsort(human, num, sizeof(human_info), compare);
 
 	idx = -1;
 	while (++idx < num)
@@ -111,3 +113,48 @@ int main()
 }
 
 //안정정렬 불안정정렬
+
+
+/*
+#include <stdio.h>
+
+int intMax(int* arr, int size) {
+    int max=0;
+    for(int i=0; i<size; i++){
+        if(max < arr[i])
+            max = arr[i];
+    }
+    return max;
+}
+
+int sorted_idx[100000] = {0,};
+void count_sort(int* age, int size) {
+    int max = intMax(age, size);
+    int idx[201]={0,};
+
+    for(int k=0; k<size; k++)
+        idx[age[k]]++;
+    for(int i=1; i<=max; i++)
+        idx[i] += idx[i-1];
+    
+    for(int i=size-1; i>=0; i--){
+        sorted_idx[--idx[age[i]]] = i;
+    }
+}
+
+int main() {
+    int N;
+    int age[100000];
+    char name[100000][101];
+    scanf("%d", &N);
+    for(int i = 0; i < N; i++) {
+        scanf("%d %s", age+i, name[i]);
+    }
+    count_sort(age, N);
+    
+    for(int i = 0; i < N; i++) {
+        printf("%d %s\n", age[sorted_idx[i]], name[sorted_idx[i]]);
+    }
+    return 0;
+}
+*/
