@@ -6,7 +6,7 @@ static void	check(int num, int togo, bool **arr, bool *check_line)
 {
 	int	idx = 0;
 
-	while (++idx < num)
+	while (++idx <= num)
 	{
 		if (arr[togo][idx] == true && check_line[idx] == false)
 		{
@@ -37,11 +37,10 @@ int	main()
 		arr[b][a] = true;
 	}
 	
-	
-
-	idx = 0, togo = 0;
+	idx = 0;
 	while (++idx <= num)
 	{
+		togo = 0;
 		while (++togo <= num)
 		{
 			if (arr[idx][togo] == true && check_line[togo] == false)
@@ -50,6 +49,8 @@ int	main()
 				count++;
 			}
 		}
+		if (check_line[idx] == false)
+			count++;
 	}
 
 	printf("%d\n", count);
