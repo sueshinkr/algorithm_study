@@ -22,27 +22,31 @@ static void	bfs(int row, int column)
 	que[0].column = column;
 	que[0].count = 0;
 	arr[row][column] = 0;
-	check[row][column] = 0;
+	check[row][column] = 1;
 
 	while (front <= rear)
 	{
-		printf("[%d][%d],COUNT : %d\n", que[front].row, que[front].column, que[front].count);
+		printf("[%d][%d],COUNT : %d\n", que[front].row + 1, que[front].column + 1, que[front].count);
 		if (arr[que[front].row][que[front].column] != 0 && arr[que[front].row][que[front].column] < size)
 		{
-			printf("(%d, %d), count : %d\n", que[front].row, que[front].column, que[front].count);
-
+			printf(":::::::::\n");
+			printf("(%d, %d), count : %d\n", que[front].row + 1, que[front].column + 1, que[front].count);
+			eat++;
+			if (eat == size)
+			{
+				size++;
+				eat = 0;
+			}
+			printf("eat : %d, size : %d\n", eat, size);
+/*
 			if (arr[que[front].row][que[front].column] == size - 1)
 			{
-				eat++;
-				if (eat == size)
-				{
-					size++;
-					eat = 0;
-				}
-				printf("eat : %d, size : %d\n", eat, size);
+				
 			}
+*/
 			arr[que[front].row][que[front].column] = 0;
 			ans += que[front].count;
+			printf("ans : %d\n", ans);
 			que[0].row = que[front].row;
 			que[0].column = que[front].column;
 			que[0].count = 0;
@@ -50,8 +54,19 @@ static void	bfs(int row, int column)
 			
 			idx = -1;
 			while (++idx < n)
-				memset(check[idx], 0, sizeof(check));
-			check[que[0].row][que[0].column] = true;
+				memset(check[idx], 0, n * sizeof(bool));
+			/*
+			row = -1;
+			while (++row < n)
+			{
+				column = -1;
+				while (++column < n)
+					printf("%d ", check[row][column]);
+				printf("\n");
+			}
+			*/
+
+		check[que[0].row][que[0].column] = true;
 		}
 
 		fr = que[front].row;
@@ -80,10 +95,13 @@ static void	bfs(int row, int column)
 		}
 		if (fr < n - 1 && arr[fr + 1][fc] <= size && !check[fr + 1][fc])
 		{
-			check[fr + 1][fc] = true;
-			que[++rear].row = fr + 1;
-			que[rear].column = fc;
-			que[rear].count = que[front].count + 1;
+			if (front == 0 || (fr != que[0].row && front != 0))
+			{
+				check[fr + 1][fc] = true;
+				que[++rear].row = fr + 1;
+				que[rear].column = fc;
+				que[rear].count = que[front].count + 1;
+			}
 		}
 		front++;
 	}
@@ -133,10 +151,32 @@ int	main()
 6 6 6 6 6 6
 
 6
+5 4 3 0 3 4
+4 3 0 3 4 5
+3 2 0 5 6 6
+2 0 0 3 4 5
+3 2 0 6 5 4
+6 6 6 6 6 6
+
+
+
+
+6
 6 0 6 0 6 1
 0 0 0 0 0 2
 2 3 4 5 6 6
 0 0 0 0 0 2
 0 2 0 0 0 0
 3 9 3 0 0 1
+
+6
+6 0 6 0 6 0
+0 0 0 0 0 2
+2 3 4 5 6 6
+0 0 0 0 0 2
+0 2 0 0 0 0
+3 9 3 0 0 0
 */
+
+
+
