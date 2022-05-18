@@ -17,7 +17,7 @@ q		que[400];
 static void	bfs(int row, int column)
 {
 	int	front = 0, rear = 0;
-	int	idx, fr, fc;
+	int	idx, fr, fc, temp;
 	que[0].row = row;
 	que[0].column = column;
 	que[0].count = 0;
@@ -26,47 +26,45 @@ static void	bfs(int row, int column)
 
 	while (front <= rear)
 	{
-		printf("[%d][%d],COUNT : %d\n", que[front].row + 1, que[front].column + 1, que[front].count);
+		idx = 0;
+		while (front + idx < rear && que[front].count == que[front + idx].count)
+		{
+			if (que[front].row > que[front + idx].row || (que[front].row == que[front + idx].row && que[front].column > que[front + idx].column))
+			{
+				temp = que[front].row;
+				que[front].row = que[front + idx].row;
+				que[front + idx].row = temp;
+				temp = que[front].column;
+				que[front].column = que[front + idx].column;
+				que[front + idx].column = temp;
+				break;
+			}
+			idx++;
+		}
+
 		if (arr[que[front].row][que[front].column] != 0 && arr[que[front].row][que[front].column] < size)
 		{
-			printf(":::::::::\n");
-			printf("(%d, %d), count : %d\n", que[front].row + 1, que[front].column + 1, que[front].count);
+			
 			eat++;
 			if (eat == size)
 			{
 				size++;
 				eat = 0;
 			}
-			printf("eat : %d, size : %d\n", eat, size);
-/*
-			if (arr[que[front].row][que[front].column] == size - 1)
-			{
-				
-			}
-*/
+
 			arr[que[front].row][que[front].column] = 0;
 			ans += que[front].count;
-			printf("ans : %d\n", ans);
+			
 			que[0].row = que[front].row;
 			que[0].column = que[front].column;
 			que[0].count = 0;
-			front = 0, rear = 0;
+			memset(que + 1, 0, sizeof(que) - sizeof(que[0]));
 			
 			idx = -1;
 			while (++idx < n)
 				memset(check[idx], 0, n * sizeof(bool));
-			/*
-			row = -1;
-			while (++row < n)
-			{
-				column = -1;
-				while (++column < n)
-					printf("%d ", check[row][column]);
-				printf("\n");
-			}
-			*/
-
-		check[que[0].row][que[0].column] = true;
+			front = 0, rear = 0;
+			check[que[0].row][que[0].column] = true;
 		}
 
 		fr = que[front].row;
@@ -95,13 +93,10 @@ static void	bfs(int row, int column)
 		}
 		if (fr < n - 1 && arr[fr + 1][fc] <= size && !check[fr + 1][fc])
 		{
-			if (front == 0 || (fr != que[0].row && front != 0))
-			{
-				check[fr + 1][fc] = true;
-				que[++rear].row = fr + 1;
-				que[rear].column = fc;
-				que[rear].count = que[front].count + 1;
-			}
+			check[fr + 1][fc] = true;
+			que[++rear].row = fr + 1;
+			que[rear].column = fc;
+			que[rear].count = que[front].count + 1;
 		}
 		front++;
 	}
@@ -142,40 +137,45 @@ int	main()
 }
 
 /*
-6
-5 4 3 2 3 4
-4 3 2 3 4 5
-3 2 9 5 6 6
-2 1 2 3 4 5
-3 2 1 6 5 4
-6 6 6 6 6 6
+printf("[%d][%d],COUNT : %d\n", que[front].row + 1, que[front].column + 1, que[front].count);
+printf(":::::::::\n");
+printf("(%d, %d), count : %d\n", que[front].row + 1, que[front].column + 1, que[front].count);
+printf("eat : %d, size : %d\n", eat, size);
+printf("ans : %d\n", ans);
+
+
+
+
+3 6 6 1 5 3
+1 6 1 5 2 4
+6 1 2 2 1 5
+4 0 0 1 6 3
+2 0 5 4 0 0
+1 0 9 0 0 3
 
 6
-5 4 3 0 3 4
-4 3 0 3 4 5
-3 2 0 5 6 6
-2 0 0 3 4 5
-3 2 0 6 5 4
-6 6 6 6 6 6
+3 6 6 1 5 0
+1 6 0 5 0 4
+6 0 0 0 0 5
+4 0 0 0 6 3
+2 0 5 ! 0 0
+0 0 0 0 0 3
 
 
 
+63
 
-6
-6 0 6 0 6 1
-0 0 0 0 0 2
-2 3 4 5 6 6
-0 0 0 0 0 2
-0 2 0 0 0 0
-3 9 3 0 0 1
 
-6
-6 0 6 0 6 0
-0 0 0 0 0 2
-2 3 4 5 6 6
-0 0 0 0 0 2
-0 2 0 0 0 0
-3 9 3 0 0 0
+7
+2 0 6 ! 0 4 1
+2 0 0 0 0 6 1
+3 5 1 0 2 5 0
+3 0 0 9 0 0 4
+6 1 1 0 2 1 6
+0 0 4 0 4 1 2
+5 0 0 0 4 0 2
+
+59
 */
 
 
