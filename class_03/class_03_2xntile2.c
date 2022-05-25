@@ -11,7 +11,7 @@ int	main()
 
 	idx = 1;
 	while (++idx < n)
-		arr[idx] = arr[idx - 1] + arr[idx - 2] * 2;
+		arr[idx] = (arr[idx - 1] + arr[idx - 2] * 2) % 10007;
 
 	printf("%d\n", arr[n - 1]);
 	free(arr);
