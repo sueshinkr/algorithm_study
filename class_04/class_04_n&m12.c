@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	n, m, base[10], check[10] = {0, }, arr[10] = {0, };
+int	n, m, base[10], arr[10] = {0, };
 
 static int	compare(const void *a, const void *b)
 {
@@ -10,7 +10,6 @@ static int	compare(const void *a, const void *b)
 
 static void	recur(int num, int len)
 {
-	//int	idx, temp;
 	int	idx;
 
 	if (len == m)
@@ -24,16 +23,11 @@ static void	recur(int num, int len)
 
 	while (num < n)
 	{
-		while (check[num] != 0)
-			num++;
-		if (num >= n)
-			break;
 		arr[len] = base[num];
-		check[num] = 1;
-
-		recur(0, len + 1);
-		
-		check[num++] = 0;
+		recur(num, len + 1);
+		num++;
+		while (base[num] == base[num - 1])
+			num++;
 	}
 }
 
@@ -45,7 +39,7 @@ int	main()
 
 	while (++idx < n)
 		scanf("%d", &base[idx]);
-	
+
 	qsort(base, n, sizeof(int), compare);
 
 	recur(0, 0);
