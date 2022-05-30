@@ -75,3 +75,71 @@ int	main()
 	printf("%s\n", temp);
 	return (0);
 }
+
+
+/*
+#include <stdio.h>
+
+#define SIZE (50)
+#define DIVIDE (1000000000000000)
+
+int num[SIZE];
+int den[SIZE];
+
+int getgcd(int n1, int n2)
+{
+    if (n2 == 0) return n1;
+    else return getgcd(n2, n1 % n2);
+}
+
+void combi(int n, int m)
+{
+    int i, j, k;
+
+    m = (m < n-m)? m: n-m;
+
+    for(i = 0; i < m; i++){
+        num[i] = n-i;
+        den[i] = i+1;
+    }
+
+    int gcd;
+    for (i = 0; i < m; i++){
+        for(j = 0; j < m; j++){
+
+            if (num[i] > 1 && den[j] > 1){
+                gcd = getgcd(num[i], den[j]);
+
+                if (gcd > 1){
+                    num[i] /= gcd;
+                    den[j] /= gcd;
+                }
+            }
+        }
+    }
+
+    long long nCm[2] = {1, 0};
+    for(i = 0; i < m; i++){
+        nCm[0] *= num[i];
+        nCm[1] *= num[i];
+        if (nCm[0] >= DIVIDE){
+            nCm[1] += nCm[0] / DIVIDE;
+            nCm[0] %= DIVIDE;
+        }
+    }
+
+    if (nCm[1] != 0) printf("%lld", nCm[1]);    
+    printf("%lld\n", nCm[0]);
+}
+
+int main(void)
+{
+    int i, j;
+    int N, M;
+    scanf("%d %d", &N, &M);
+
+    combi(N, M);
+
+    return 0;
+}
+*/
