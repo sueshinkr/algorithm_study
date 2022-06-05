@@ -10,7 +10,6 @@ static int	compare(const void *a, const void *b)
 
 static void	recur(int num, int len)
 {
-	//int	idx, temp;
 	int	idx;
 
 	if (len == m)
