@@ -1,21 +1,24 @@
 #include <stdio.h>
 #define MIN(x, y) ((x < y) ? (x) : (y))
 
-int value(int N, int K)
+int value(int n, int k)
 {
-	if(K <= N)
-		return N-K;
-	else if(K == 1) 
+	if(k <= n)
+		return n-k;
+	else if(k == 1) 
 		return 1;
-	else if(K % 2 == 1)
-		return (1 + MIN(value(N, K - 1), value(N, K + 1)));
+	else if(k % 2 == 1)
+		return (1 + MIN(value(n, k - 1), value(n, k + 1)));
 	else
-		return MIN(K - N, value(N, K / 2));
+		return MIN(k - n, value(n, k / 2));
 }
 
-int main(void) {
-	int N, K;
-	scanf("%d %d", &N, &K);
-	printf("%d\n", value(N, K));
+int main(void)
+{
+	int n, k;
+	
+	scanf("%d %d", &n, &k);
+	
+	printf("%d\n", value(n, k));
 	return 0;
 }
