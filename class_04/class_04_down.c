@@ -1,8 +1,11 @@
 #include <stdio.h>
+#define MAX(x, y) (((x) > (y)) ? (x) : (y))
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
 int	main()
 {
-	int n, row, a, b, c, max[3], min[3], temp;
+	int	n, row, a, b, c;
+	int	max[3], min[3], temp[3];
 	int	max_num, min_num;
 	
 	scanf("%d", &n);
@@ -17,28 +20,22 @@ int	main()
 			max[1] = b, min[1] = b;
 			max[2] = c, min[2] = c;
 		}
-		else
+		if (row > 0)
 		{
-			temp = a > b ? a : b;
-			max[0] += temp;
-			temp = temp > c ? temp : c;
-			max[1] += temp;
-			temp = b > c ? b : c;
-			max[2] += temp;
+			temp[0] = max[0], temp[1] = max[1], temp[2] = max[2];
+			max[0] = MAX(temp[0], temp[1]) + a;
+			max[1] = MAX(MAX(temp[0], temp[1]), temp[2]) + b;
+			max[2] = MAX(temp[1], temp[2]) + c;
 
-			temp = a < b ? a : b;
-			min[0] += temp;
-			temp = temp < c ? temp : c;
-			min[1] += temp;
-			temp = b < c ? b : c;
-			min[2] += temp;
+			temp[0] = min[0], temp[1] = min[1], temp[2] = min[2];
+			min[0] = MIN(temp[0], temp[1]) + a;
+			min[1] = MIN(MIN(temp[0], temp[1]), temp[2]) + b;
+			min[2] = MIN(temp[1], temp[2]) + c;
 		}
 	}
 
-	max_num = max[0] > max[1] ? max[0] : max[1];
-	max_num = max_num > max[2] ? max_num : max[2];
-	min_num = min[0] < min[1] ? min[0] : min[1];
-	min_num = min_num < min[2] ? min_num : min[2];
+	max_num = MAX(MAX(max[0], max[1]), max[2]);
+	min_num = MIN(MIN(min[0], min[1]), min[2]);
 
 	printf("%d %d\n", max_num, min_num);
 }
