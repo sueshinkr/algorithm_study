@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
 #define MAX 2147483647
@@ -12,7 +11,6 @@ struct to_cost
 
 int	arr[1001][1001] = {0, };
 int	min_cost[1001] = {0, };
-struct to_cost	check[1000];
 
 static int compare (const void *a, const void *b)
 {
@@ -25,13 +23,15 @@ static int compare (const void *a, const void *b)
 static void	set_mincost(int n, int from)
 {
 	int	to = 0, line = 0, idx = -1;
+	struct to_cost	check[1001];
 
-	//printf("from : %d\n", from);
+	printf("from : %d\n", from);
 	while(++to <= n)
 	{
+		//printf(":::%d %d\n", min_cost[from], arr[from][to]);
 		if (arr[from][to] != -1 && min_cost[from] + arr[from][to] < min_cost[to])
 		{
-			//printf("%d %d\n", from, to);
+			printf("from %d to %d\n", from, to);
 			min_cost[to] = min_cost[from] + arr[from][to];
 			check[line].to = to;
 			check[line++].cost = arr[from][to];
@@ -41,12 +41,10 @@ static void	set_mincost(int n, int from)
 	if(line == 0)
 		return;
 	qsort(check, line - 1, sizeof(struct to_cost), compare);
-	//printf("sort\n");
 
 	while (++idx < line)
 		set_mincost(n, check[idx].to);
 }
-
 
 int	main()
 {
@@ -65,7 +63,9 @@ int	main()
 	while (bus_n-- > 0)
 	{
 		scanf("%d %d %d", &from, &to, &cost);
-		if (arr[from][to] != -1 && arr[from][to] > cost)
+		if (arr[from][to] == -1)
+			arr[from][to] = cost;
+		else if (arr[from][to] != -1 && arr[from][to] > cost)
 			arr[from][to] = cost;
 		min_cost[to] = MAX;
 	}
@@ -78,3 +78,5 @@ int	main()
 
 	return (0);
 }
+
+//다익스트라
