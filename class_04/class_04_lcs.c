@@ -5,7 +5,7 @@
 int	main()
 {
 	char	str1[1001], str2[1001];
-	int	arr[1001][1001] = {0, };
+	int		arr[1001][1001] = {0, };
 	int		idx1 = 0, idx2= 0, len1, len2;
 
 	scanf("%s %s", str1, str2);
