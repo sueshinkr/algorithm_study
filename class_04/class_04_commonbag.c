@@ -7,7 +7,7 @@ struct object
 	int	v;
 };
 
-int	dp[100001];
+int	dp[100001] = {0, };
 struct object obj[100];
 
 int	main()
@@ -16,12 +16,12 @@ int	main()
 
 	scanf("%d %d", &n, &total_w);
 
-	idx = 0;
-	while (++idx <= n)
+	idx = -1;
+	while (++idx < n)
 		scanf("%d %d", &obj[idx].w, &obj[idx].v);
 
-	idx = 0;
-	while (++idx <= n)
+	idx = -1;
+	while (++idx < n)
 	{
 		weight = total_w + 1;
 		while (--weight - obj[idx].w >= 0)
