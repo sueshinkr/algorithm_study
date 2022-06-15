@@ -62,7 +62,7 @@ static int	count_safe(int arr[8][8])
 			q[rear++].c = q[front].c + 1;
 			count++;
 		}
-		if q[front].c > 0 && temp_arr[q[front].r][q[front].c - 1] == 0
+		if (q[front].c > 0 && temp_arr[q[front].r][q[front].c - 1] == 0)
 		{
 			temp_arr[q[front].r][q[front].c - 1] = 2;
 			q[rear].r = q[front].r;
@@ -71,13 +71,14 @@ static int	count_safe(int arr[8][8])
 		}
 		front++;
 	}
+
 	return (count);
 }
 
 
 static void	make_wall(int arr[8][8], int r, int c, int count)
 {
-	int temp_r, temp_c, count;
+	int temp_r, temp_c, ans;
 
 	temp_r = r - 1;
 	while (++temp_r < row)
@@ -98,8 +99,8 @@ static void	make_wall(int arr[8][8], int r, int c, int count)
 				}
 				else
 				{
-					count = count_safe(arr);
-					min = MIN(min, count);
+					ans = count_safe(arr);
+					min = MIN(min, ans);
 					arr[temp_r][temp_c] = 0;
 				}
 			}
