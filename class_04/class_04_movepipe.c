@@ -1,43 +1,57 @@
 #include <stdio.h>
 
+struct pipe
+{
+	int r;
+	int c;
+	int d;
+};
+
 int	n, count = 0;
 int	arr[16][16];
 
-static void	check(int r, int c, int type)
+
+static int	check()
 {
-	if (r == n - 1 && c == n - 1)
+	struct pipe p[16][16];
+	int r, c;
+
+	r = -1;
+	while (++r < n)
 	{
-		count++;
-		return ;
+		c = -1;
+		while (++c < n)
+		{
+			p[r][c].r = 0;
+			p[r][c].c = 0;
+			p[r][c].d = 0;
+		}
 	}
 
-	if (type == 1)
+	p[0][1].r = 1;
+
+	r = -1;
+	while (++r < n)
 	{
-		if (c == n - 1)
-			return ;
-		if (arr[r][c + 1] != 1)
-			check(r, c + 1, 1);
-		if (r != n - 1 && arr[r][c + 1] != 1 && arr[r + 1][c] != 1 && arr[r + 1][c + 1] != 1)
-			check(r + 1, c + 1, 3);
+		c = 1;
+		while (++c < n)
+		{
+			if (arr[r][c] == 0)
+			{
+				if (c > 0 && (p[r][c - 1].r != 0 || p[r][c - 1].d != 0))
+					p[r][c].r += (p[r][c - 1].r + p[r][c - 1].d);
+				if (r > 0 && (p[r - 1][c].c != 0 || p[r - 1][c].d != 0))
+					p[r][c].c += (p[r - 1][c].c + p[r - 1][c].d);
+				if (r > 0 && c > 0 && arr[r - 1][c] == 0 && arr[r][c - 1] == 0)
+				{
+					if (p[r - 1][c - 1].r != 0 || p[r - 1][c - 1].c != 0 || p[r - 1][c - 1].d != 0)
+						p[r][c].d += (p[r - 1][c - 1].r + p[r - 1][c - 1].c + p[r - 1][c - 1].d);
+				}
+			}
+		}
 	}
-	else if (type == 2)
-	{
-		if (r == n - 1)
-			return ;
-		if (arr[r + 1][c] != 1)
-			check(r + 1, c, 2);
-		if (c != n - 1 && arr[r][c + 1] != 1 && arr[r + 1][c] != 1 && arr[r + 1][c + 1] != 1)
-			check(r + 1, c + 1, 3);
-	}
-	else if (type == 3)
-	{
-		if (c != n - 1 && arr[r][c + 1] != 1)
-			check(r, c + 1, 1);
-		if (r != n - 1 && arr[r + 1][c] != 1)
-			check(r + 1, c, 2);
-		if (c != n - 1 && r != n - 1 && arr[r][c + 1] != 1 && arr[r + 1][c] != 1 && arr[r + 1][c + 1] != 1)
-			check(r + 1, c + 1, 3);
-	}
+
+	return (p[n - 1][n - 1].r + p[n - 1][n - 1].c + p[n - 1][n - 1].d);
 }
 
 int	main()
@@ -54,6 +68,5 @@ int	main()
 			scanf("%d", &arr[r][c]);
 	}
 
-	check(0, 1, 1); // 1 : hor, 2 : ver, 3 : diagonal
-	printf("%d\n", count);
+	printf("%d\n", check());
 }

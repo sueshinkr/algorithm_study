@@ -1,4 +1,92 @@
 #include <stdio.h>
+#define ABS(x) ((x > 0) ? (x) : -(x))
+#define MAX 2147483647
+
+int	n, m, ans = MAX;
+int	house[100][2];
+int	chicken[13][2];
+int	select_chicken[13];
+int	dis[100][13];
+int	house_num = 0, chicken_num = 0;
+
+static void	setting(int cur_chicken, int idx)
+{
+	// cur_chicken : 지금까지 고른 치킨집 개수
+	// idx : 치킨집을 선택하기 시작할 위치
+	int	temp = idx, house_idx, chicken_idx;
+	int	temp_min, temp_sum = 0;
+
+	if (cur_chicken < m)
+	{
+		while (++temp <= chicken_num - (m - cur_chicken))
+		{
+			select_chicken[cur_chicken] = temp;
+			setting(cur_chicken + 1, temp);
+		}
+	}
+	else
+	{
+		house_idx = -1;
+		while (++house_idx < house_num)
+		{
+			temp_min = MAX;
+			chicken_idx = -1;
+			while (++chicken_idx < m)
+			{
+				if (temp_min > dis[house_idx][select_chicken[chicken_idx]])
+					temp_min = dis[house_idx][select_chicken[chicken_idx]];
+			}
+			temp_sum += temp_min;
+		}
+		if (ans > temp_sum)
+			ans = temp_sum;
+	}
+}
+
+int	main()
+{
+	int	r, c, temp;
+
+	scanf("%d %d", &n, &m);
+
+	r = -1;
+	while (++r < n)
+	{
+		c = -1;
+		while (++c < n)
+		{
+			scanf("%d", &temp);
+			if (temp == 1)
+			{
+				house[house_num][0] = r;
+				house[house_num++][1] = c;
+			}
+			else if (temp == 2)
+			{
+				chicken[chicken_num][0] = r;
+				chicken[chicken_num++][1] = c;
+			}
+		}
+	}
+
+	r = -1;
+	while (++r < house_num)
+	{
+		c = -1;
+		while (++c < chicken_num)
+			dis[r][c] = ABS(house[r][0] - chicken[c][0]) + ABS(house[r][1] - chicken[c][1]);
+	}
+
+	setting(0, -1);
+	printf("%d\n", ans);
+	return (0);
+}
+
+
+
+
+/*
+#include <stdio.h>
 #include <string.h>
 #define MIN(x, y) ((x < y) ? (x) : (y))
 
@@ -143,3 +231,4 @@ int	main()
 	select_store(arr, 0, -1, count);
 	printf("%d\n", min);
 }
+*/
