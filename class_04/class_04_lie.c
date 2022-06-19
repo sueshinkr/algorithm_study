@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdbool.h>
 
 int parent[51];
 int	truth[50] = {0, }, party_arr[50][51] = {0, };

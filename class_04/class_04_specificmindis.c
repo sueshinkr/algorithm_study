@@ -1,108 +1,94 @@
-#include <stdio.h>
-#include <stdlib.h>
-#define MAX 2147483647
-#define MIN(x, y) ((x < y) ? (x) : (y))
+#include<stdio.h>
+#define INF 2147483647
 
-int	n, e;
-int	**arr;
-int *min_dis, *check;
+int v1, v2, N;
+int map[801][801];
+long long dist[801];
+int visit[801];
 
-static void	clear_disandcheck()
+int getSmallIndex(void)
 {
-	int	idx = 0;
-	while (++idx <= n)
+	int i, j;
+	int min = INF;
+	int index = 1;
+	for(i = 1; i <= N; i++)
 	{
-		min_dis[idx] = MAX;
-		check[idx] = 0;
+		if(dist[i] < min && !visit[i])
+		{
+			min = dist[i];
+			index = i;
+		}
 	}
+	return index;
 }
 
-static void	cal_dis(int from)
+void dijkstra(int start)
 {
-	int	idx = 0, to = 0, temp_min = MAX;
-
-	check[from] = 1;
-	while (++idx <= n)
-	{
-		if (arr[from][idx] != 0)
-		{
-			if (min_dis[idx] > min_dis[from] + arr[from][idx])
-				min_dis[idx] = min_dis[from] + arr[from][idx];
-		}
-		if (arr[idx][from] != 0)
-		{
-			if (min_dis[idx] > min_dis[from] + arr[idx][from])
-				min_dis[idx] = min_dis[from] + arr[idx][from];
-		}
-	}
+	int i, j, index;
 	
-	idx = 0;
-	while (++idx <= n)
+	for(i = 1; i <= N; i++)
 	{
-		if (check[idx] == 0)
+		visit[i] = 0;
+		dist[i] = map[start][i];
+	}
+	visit[start] = 1;
+	
+	for(i = 1; i <= N; i++)
+	{
+		index = getSmallIndex();
+		visit[index] = 1;
+		
+		for(j = 1; j <= N; j++)
 		{
-			if (min_dis[idx] < temp_min)
+			if(!visit[j])
 			{
-				temp_min = min_dis[idx];
-				to = idx;
+				if(dist[j] > dist[index] + map[index][j])
+				{
+					dist[j] = dist[index] + map[index][j];
+				}
 			}
 		}
 	}
-	if (to)
-		cal_dis(to);
 }
 
-
-int	main()
+int main(void)
 {
-	int	idx, from, to, cost, a, b, route1, route2;
-
-	scanf("%d %d", &n, &e);
-
-	arr = (int **)calloc((n + 1), sizeof(int *));
-	idx = 0;
-	while (++idx <= n)
-		arr[idx] = (int *)calloc((n + 1), sizeof(int));
-	check = (int *)calloc((n + 1), sizeof(int));
-	min_dis = (int *)malloc((n + 1) * sizeof(int));
-	clear_disandcheck();
-
-	idx = -1;
-	while (++idx < e)
+	int edge, from, to, cost, i, j;
+	long long res1 = 0, res2 = 0;
+	scanf("%d %d", &N, &edge);
+	
+	for(i = 1; i <= N; i++)
+	{
+		for(j = 1; j <= N; j++)
+		{
+			if(i == j)
+				map[i][j] = 0;
+			else
+				map[i][j] = INF;
+		}
+	}
+	
+	for(i = 0; i < edge; i++)
 	{
 		scanf("%d %d %d", &from, &to, &cost);
-		arr[from][to] = cost;
+		
+		map[from][to] = cost;
+		map[to][from] = cost; 
 	}
-
-	scanf("%d %d", &a, &b);
-
-	min_dis[1] = 0;
-	cal_dis(1);
-	route1 = min_dis[a]; // route 1 : 1->a->b->n
-	route2 = min_dis[b]; // route 2 : 1->b->a->n
-	if (route1 == MAX || route2 == MAX)
-	{
-		printf("%d\n", -1);
-		return (0);
-	}
-	clear_disandcheck();
-
-	min_dis[a] = 0;
-	cal_dis(a);
-	route1 += min_dis[b];
-	route2 += min_dis[b];
-	clear_disandcheck();
 	
-	min_dis[b] = 0;
-	cal_dis(b);
-	route1 += min_dis[n];
-	clear_disandcheck();
-
-	min_dis[a] = 0;
-	cal_dis(a);
-	route2 += min_dis[n];
-	clear_disandcheck();
-
-	printf("%d\n", MIN(route1, route2));
-	return (0);
+	scanf("%d %d", &v1, &v2);
+	
+	dijkstra(v1);
+	res1 = res1 + dist[1] + dist[v2];
+	res2 = res2 + dist[N];
+	dijkstra(v2);
+	res1 = res1 + dist[N];
+	res2 = res2 + dist[1] + dist[v1];
+	
+	if(res1 >= INF || res2 >= INF)
+		printf("-1");
+	else if(res1 > res2)
+		printf("%lld", res2);
+	else
+		printf("%lld", res1);
 }
