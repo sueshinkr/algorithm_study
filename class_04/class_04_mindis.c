@@ -1,86 +1,123 @@
 #include <stdio.h>
-#include <stdlib.h>
-#define MAX 2147483647
-#define MIN(x, y) ((x < y) ? (x) : (y))
 
-int	n, e;
-int	**arr;
-int *min_dis, *check;
+#define MXN 20000
+#define MXM 300000
 
-static void	clear_disandcheck()
-{
-	int	idx = 0;
-	while (++idx <= n)
-	{
-		min_dis[idx] = MAX;
-		check[idx] = 0;
+typedef struct {
+	int dist, to;
+	int next;
+} Edge;
+Edge E[MXM];
+int Ecnt;
+
+int Adj[MXN];
+
+void init(int n) {
+	for (int i = 0; i < n; i++) {
+		Adj[i] = -1;
+	}
+	Ecnt = 0;
+}
+
+void pushEdge(int a, int b, int w) {
+	int eid = Ecnt++;
+	E[eid].to = b;
+	E[eid].dist = w;
+	E[eid].next = Adj[a];
+	Adj[a] = eid;
+}
+
+typedef struct {
+	int to;
+	int dist;
+} QEntry;
+QEntry PQ[MXM * 2];
+int Qlen;
+
+#define SWAP(t, x, y)	{ t=(x); (x)=(y); (y)=t; }
+
+void inline swapQ(int a, int b) {
+	int t;
+	SWAP(t, PQ[a].to, PQ[b].to);
+	SWAP(t, PQ[a].dist, PQ[b].dist);
+}
+
+void pushQ(int to, int dist) {
+	int i = Qlen++;
+	PQ[i].to = to;
+	PQ[i].dist = dist;
+	while (i > 0) {
+		int p = (i - 1) / 2;
+		if (PQ[p].dist > PQ[i].dist) {
+			swapQ(p, i);
+			i = p;
+		}
+		else
+			break;
 	}
 }
 
-static void	cal_dis(int from)
-{
-	int	idx = 0, to = 0, temp_min = MAX;
-
-	check[from] = 1;
-	while (++idx <= n)
-	{
-		if (arr[from][idx] != 0)
-		{
-			if (min_dis[idx] > min_dis[from] + arr[from][idx])
-				min_dis[idx] = min_dis[from] + arr[from][idx];
+QEntry* popQ() {
+	QEntry* ret = NULL;
+	if (Qlen > 0) {
+		swapQ(0, --Qlen);
+		ret = &PQ[Qlen];
+		int i = 0;
+		while (i * 2 + 1 < Qlen) {
+			int l = i * 2 + 1, r = l + 1;
+			if (r < Qlen && PQ[r].dist < PQ[l].dist && PQ[r].dist < PQ[i].dist) {
+				swapQ(r, i); i = r;
+			}
+			else if (PQ[l].dist < PQ[i].dist) {
+				swapQ(l, i); i = l;
+			}
+			else
+				break;
 		}
 	}
-	
-	idx = 0;
-	while (++idx <= n)
-	{
-		if (check[idx] == 0)
-		{
-			if (min_dis[idx] < temp_min)
-			{
-				temp_min = min_dis[idx];
-				to = idx;
+	return ret;
+}
+
+#define INF (1<<30)
+
+int D[MXN];
+int Vdone[MXN];
+
+void spf(int n, int s)
+{
+	for (int i = 0; i < n; i++) {
+		D[i] = INF;
+		Vdone[i] = 0;
+	}
+	D[s] = 0;
+	Qlen = 0;
+	pushQ(s, 0);
+	QEntry *qe;
+	while ((qe = popQ()) != NULL) {
+		int i = qe->to;
+		if (Vdone[i]) continue;
+		Vdone[i] = 1;
+		for (int eid = Adj[i]; eid >= 0; eid = E[eid].next) {
+			int to = E[eid].to;
+			if (D[to] > D[i] + E[eid].dist) {
+				D[to] = D[i] + E[eid].dist;
+				pushQ(to, D[to]);
 			}
 		}
 	}
-	if (to)
-		cal_dis(to);
 }
-
-
-int	main()
+int main()
 {
-	int	idx, start, from, to, cost;
-
-	scanf("%d %d", &n, &e);
-
-	arr = (int **)calloc((n + 1), sizeof(int *));
-	idx = 0;
-	while (++idx <= n)
-		arr[idx] = (int *)calloc((n + 1), sizeof(int));
-	check = (int *)malloc((n + 1) * sizeof(int));
-	min_dis = (int *)malloc((n + 1) * sizeof(int));
-	clear_disandcheck();
-
-	scanf("%d", &start);
-
-	idx = -1;
-	while (++idx < e)
-	{
-		scanf("%d %d %d", &from, &to, &cost);
-		arr[from][to] = cost;
+	int N, M, S; scanf("%d %d %d", &N, &M, &S);
+	init(N);
+	for (int i = 0; i < M; i++) {
+		int A, B, C; scanf("%d %d %d", &A, &B, &C);
+		pushEdge(A - 1, B - 1, C);
 	}
-
-	min_dis[start] = 0;
-	cal_dis(start);
-
-	idx = 0;
-	while(++idx <= n)
-	{
-		if (min_dis[idx] == MAX)
-			printf("INF\n");
-		else
-			printf("%d\n", min_dis[idx]);
+	spf(N, S-1);
+	for (int i = 0; i < N; i++) {
+        if (D[i] == INF) printf("INF\n");
+		else printf("%d\n", D[i]);
 	}
-	return (0);
+    return 0;
 }
