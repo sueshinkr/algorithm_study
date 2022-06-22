@@ -1,5 +1,154 @@
 #include <stdio.h>
+#include <stdlib.h>
+#define MAX 2147483647
 
+struct	node
+{
+	int	to, cost;
+	struct node	*next;
+};
+
+struct	heap
+{
+	int	cur, cost;
+};
+
+struct node	*nd[20001];
+struct heap	que[30000];
+int	n, e, idx = 1;
+int	min_dis[20001];
+
+static void	swap(struct heap *a, struct heap *b)
+{
+	int	temp_cur, temp_cost;
+
+	temp_cost = a->cost;
+	a->cost = b->cost;
+	b->cost = temp_cost;
+
+	temp_cur = a->cur;
+	a->cur = b->cur;
+	b->cur = temp_cur;
+}
+
+static void	push_que(int to, int cost)
+{
+	int	temp_idx = ++idx;
+	if (min_dis[to] < cost)
+		return ;
+	que[temp_idx].cur = to;
+	que[temp_idx].cost = cost;
+	while(temp_idx > 1)
+	{
+		if (que[temp_idx].cost < que[temp_idx / 2].cost)
+		{
+			swap(&que[temp_idx], &que[temp_idx / 2]);
+			temp_idx /= 2;
+		}
+		else
+			break;
+	}
+	
+}
+
+static void	pop_que()
+{
+	int new_idx = 1;
+
+	if (idx == 1)
+	{
+		que[idx].cur = 0;
+		return ;
+	}
+	que[new_idx].cur = que[idx].cur;
+	que[new_idx].cost = que[idx].cost;
+	while (new_idx * 2 < idx)
+	{
+		if (que[new_idx].cost > que[new_idx * 2].cost || que[new_idx].cost > que[new_idx * 2 + 1].cost)
+		{
+			if (que[new_idx * 2].cost < que[new_idx * 2 + 1].cost)
+			{
+				swap(&que[new_idx], &que[new_idx * 2]);
+				new_idx = new_idx * 2;
+			}
+			else
+			{
+				swap(&que[new_idx], &que[new_idx * 2 + 1]);
+				new_idx = new_idx * 2 + 1;
+			}
+		}
+		else
+			break;
+	}
+	idx--;
+}
+
+static void	dijkstra(int start)
+{
+	int	from;
+
+	min_dis[start] = 0;
+	que[1].cur = start;
+	while (que[1].cur != 0)
+	{
+		from = que[1].cur;
+		if (min_dis[que[1].cur] < que[1].cost)
+		{
+			pop_que();
+			continue;
+		}
+		while (nd[from])
+		{
+			if (min_dis[nd[from]->to] > min_dis[from] + nd[from]->cost)
+			{
+				min_dis[nd[from]->to] = min_dis[from] + nd[from]->cost;
+				push_que(nd[from]->to, min_dis[nd[from]->to]);
+			}
+			nd[from] = nd[from]->next;
+		}
+		pop_que();
+	}
+}
+
+int	main()
+{
+	int	idx, start, from, to, cost;
+
+	scanf("%d %d", &n, &e);
+	scanf("%d", &start);
+
+	struct node *temp_node;
+
+	idx = -1;
+	while (++idx < e)
+	{
+		scanf("%d %d %d", &from, &to, &cost);
+
+		temp_node = (struct node *)malloc(sizeof(struct node));
+		temp_node->to = to;
+		temp_node->cost = cost;
+		temp_node->next = nd[from];
+		nd[from] = temp_node;
+	}
+
+	idx = 0;
+	while (++idx <= n)
+		min_dis[idx] = MAX;
+
+	dijkstra(start);
+
+	idx = 0;
+	while(++idx <= n)
+	{
+		if (min_dis[idx] == MAX)
+			printf("INF\n");
+		else
+			printf("%d\n", min_dis[idx]);
+	}
+}
+
+
+/*
 #define MXN 20000
 #define MXM 300000
 
@@ -121,3 +270,4 @@ int main()
 	}
     return 0;
 }
+*/
