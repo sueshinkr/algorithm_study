@@ -4,6 +4,8 @@
 		"class_02_sortnum2": "c",
 		"stdlib.h": "c",
 		"cstdio": "c",
-		"stdbool.h": "c"
+		"stdbool.h": "c",
+		"string.h": "c",
+		"ios": "c"
 	}
 }

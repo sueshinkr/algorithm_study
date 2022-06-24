@@ -13,7 +13,7 @@ static int check_ch(int ch_temp, int *broke_num)
 		ch_temp /= 10;
 		count++;
 	}
-		
+	
 	return (count);	
 }
 

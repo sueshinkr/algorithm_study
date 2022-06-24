@@ -1,14 +1,11 @@
 #include <stdio.h>
-#include <string.h>
-
 
 int main()
 {
-	int	num, num_arr[10001], temp, idx, idx2;
+	int	num, num_arr[10001] = {0, }, temp, idx, idx2;
 
 	scanf("%d", &num);
 
-	memset(num_arr, 0, sizeof(num_arr));
 	idx = -1;
 	while (++idx < num)
 	{

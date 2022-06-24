@@ -39,7 +39,6 @@ int main()
 		scanf("%d %d", &xy[idx].x, &xy[idx].y);
 
 	qsort(xy, num, sizeof(cor), compare);
-	//quick_sort(xy, 0, num - 1);
 
 	idx = -1;
 	while (++idx < num)

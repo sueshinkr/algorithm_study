@@ -36,7 +36,7 @@ int main()
 		hash_result = hash_temp % 1234567891;
 	}
 
-	printf("%lld", hash_temp % 1234567891);
+	printf("%d", hash_result);
 	free(str);
 	return (0);
 }

@@ -22,11 +22,10 @@ static void	add_list(per *head, int idx)
 	else
 	{
 		temp = head->next;
-		head = head->next;
-		while (head->num != idx)
-			head = head->next;
-		head->next = new;
-		new->next = temp;
+		while (temp->num != idx)
+			temp = temp->next;
+		temp->next = new;
+		new->next = head->next;
 	}
 }
 

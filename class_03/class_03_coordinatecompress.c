@@ -23,7 +23,7 @@ static void	search(int *sort_arr, int find_num, int new_idx)
 		if (find_num > sort_arr[mid])
 			min = mid + 1;
 		else if (find_num < sort_arr[mid])
-			max = mid;
+			max = mid - 1;
 		else
 			break;
 	}
@@ -68,3 +68,34 @@ int	main()
 	free(sort_arr);
 	return (0);
 }
+
+
+
+/*
+int main(){
+    int n, cprNum = 0;
+    int* x, *x2, *x3;
+
+    scanf(" %d", &n);
+    x = malloc(sizeof(int)*n);
+    x2 = malloc(sizeof(int)*n);
+    x3 = malloc(sizeof(int)*n);
+    for(int i=0; i<n; i++){ 
+        scanf(" %d", &x[i]);
+        x2[i] = i;
+    }
+
+    quickSort(x, x2, 0, n-1);
+    x3[x2[0]] = 0;
+    for(int i = 1; i < n; i++){
+        if(x[i] != x[i-1]) cprNum++;
+        x3[x2[i]] = cprNum;
+    }
+    //printArray(x, n);
+    //printArray(x2, n);
+
+    printArray(x3, n);
+
+    return 0;
+}
+*/
