@@ -6,6 +6,12 @@
 		"cstdio": "c",
 		"stdbool.h": "c",
 		"string.h": "c",
+<<<<<<< HEAD
 		"ios": "c"
+=======
+		"random": "c",
+		"limits": "c",
+		"algorithm": "c"
+>>>>>>> f0965f0ceb85ae7461dd533ed3409fb39ae26194
 	}
 }
