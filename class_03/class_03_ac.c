@@ -90,7 +90,3 @@ int main()
 
 	return (0);
 }
-
-
-//freopen("I.in", "r", stdin);
-//freopen("output.txt", "w", stdout);
