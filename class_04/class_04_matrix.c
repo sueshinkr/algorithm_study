@@ -6,16 +6,16 @@ int	matrix_temp[5][5];
 int	n;
 long long b;
 
-static int	cal(int matrix[5][5], int row, int column)
+static int	cal(int matrix1[5][5], int matrix2[5][5], int row, int column)
 {
 	int	ans = 0, idx =- 1;
 
 	while(++idx < n)
-		ans += matrix_change[row][idx] * matrix[idx][column];
+		ans += matrix1[row][idx] * matrix2[idx][column];
 	return (ans % 1000);
 }
 
-static void	change(int matrix[5][5])
+static void	change_matrix(int matrix1[5][5], int matrix2[5][5])
 {
 	int	row, column;
 
@@ -24,31 +24,18 @@ static void	change(int matrix[5][5])
 	{
 		column = -1;
 		while (++column < n)
-			matrix_temp[row][column] = cal(matrix, row, column);
+		{
+			matrix_temp[row][column] = 0;
+			matrix_temp[row][column] = cal(matrix1, matrix2, row, column);
+		}
 	}
-}
-
-static void matrix_cal(int x)
-{
-	int	row, column;
-
-	if (x == 1)
-		;
-	else if (x % 2 == 0)
-		matrix_cal(x / 2);
-	else if (x % 2 == 1)
-		matrix_cal((x - 1) / 2);
-
-	change(matrix_change);
-	if (x % 2 == 1)
-		change(matrix_base);
 
 	row = -1;
 	while (++row < n)
 	{
-		column = -1;		
+		column = -1;
 		while (++column < n)
-			matrix_change[row][column] = matrix_temp[row][column];
+			matrix1[row][column] = matrix_temp[row][column];
 	}
 }
 
@@ -63,13 +50,18 @@ int	main()
 	{
 		column = -1;
 		while (++column < n)
-		{
 			scanf("%d", &matrix_base[row][column]);
-			matrix_change[row][column] = matrix_base[row][column];
-		}
+		matrix_change[row][row] = 1;
 	}
 
-	matrix_cal(b);
+	while (b)
+	{
+		if (b % 2 == 1)
+			change_matrix(matrix_change, matrix_base);
+		if (b > 1)
+			change_matrix(matrix_base, matrix_base);
+		b /= 2;
+	}
 
 	row = -1;
 	while (++row < n)
