@@ -68,7 +68,7 @@ int	main()
 	{
 		column = -1;
 		while (++column < n)
-			printf("%d ", matrix_change[row][column]);
+			printf("%d ", matrix_change[row][column] % 1000);
 		printf("\n");
 	}
 	return (0);
