@@ -1,62 +1,41 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-char	ans[1000001];
-char	str[1000001];
-char	bomb[36];
-int		ans_idx = 0;
-
-static int	check_bomb(int idx)
-{
-	int	bomb_idx = 1, temp_idx = -1;
-
-	if (str[idx] == bomb[0])
-		idx = check_bomb(idx + 1);
-
-	while (str[idx] && str[idx] == bomb[bomb_idx])
-	{
-		idx++;
-		bomb_idx++;
-		if (str[idx] == bomb[0])
-			idx = check_bomb(idx + 1);
+int main(void) {
+	char b[1000001]; //b
+	char pivot[37]; //pivot
+	char a[1000001]; //a
+	int top=-1;
+	
+	scanf("%s", b);
+	scanf("%s", pivot);
+	
+	int b_len=strlen(b);
+	int pivot_len=strlen(pivot);
+	
+	for (int i=0; i<b_len; i++) {
+		top++;
+		a[top]=b[i];
+		if (a[top]==pivot[pivot_len-1]) {
+			int flag=0;
+			for (int j=1; j<pivot_len; j++) {
+				if (a[top-j]!=pivot[pivot_len-1-j]) {
+					flag=1;
+					break;
+				}
+			}
+			if (flag==0) {
+				top-=pivot_len;
+			}
+		}
 	}
-	if (bomb[bomb_idx] != 0)
-	{
-		while (++temp_idx < bomb_idx)
-			ans[ans_idx++] = bomb[temp_idx];
+	
+	a[++top]='\0';
+	if (a[0]=='\0') {
+		printf("FRULA");
 	}
-	return (idx);
-}
-
-static void	check()
-{
-	int	idx = 0, bomb_idx = 0;
-
-	while (str[idx])
-	{
-		if (str[idx] != bomb[bomb_idx])
-			ans[ans_idx++] = str[idx++];
-		else
-			idx = check_bomb(idx + 1);
+	else {
+		printf("%s", a);
 	}
-}
-
-int	main()
-{
-	scanf("%s", str);
-	scanf("%s", bomb);
-
-	check();
-
-	if(ans[0])
-		printf("%s\n", ans);
-	else
-		printf("FRULA\n");
-	return (0);
-}
-
-/*
-abacabcc
-
-abc
-*/
+} 
